@@ -17,9 +17,9 @@ public class MainPresenter implements MainContract.Presenter, NetworkManager.Com
     private MainContract.View view;
     private NetworkManager networkManager;
 
-    public MainPresenter (Context context) {
+    public MainPresenter (Context context, MainContract.View view) {
         networkManager = new NetworkManager(context, this);
-        view = (MainContract.View) context;
+        this.view = view;
     }
 
     @Override

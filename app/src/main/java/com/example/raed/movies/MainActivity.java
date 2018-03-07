@@ -1,34 +1,24 @@
 package com.example.raed.movies;
 
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
-import com.example.raed.movies.model.Results;
-
-public class MainActivity extends AppCompatActivity implements MainContract.View {
+public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     private static final String STATE_SELECTED = "selected";
     public static final String SELECTED_MOVIE = "selected_movie";
 
     MainPresenter presenter;
 
-    ViewAdapter adapter;
-
-    RecyclerView recyclerView;
-
     boolean isSelectedTop = false;
-
-    StaggeredGridLayoutManager layoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,21 +26,16 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+
+        ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager);
+        FragmentPagerAdapter adapter = new FragmentPagerAdapter(getSupportFragmentManager());
+        viewPager.setAdapter(adapter);
+        tabLayout.setupWithViewPager(viewPager);
 
         if (savedInstanceState != null) {
             isSelectedTop = savedInstanceState.getBoolean(STATE_SELECTED);
         }
-        presenter = new MainPresenter(this);
-
-        adapter = new ViewAdapter(this);
-        recyclerView = (RecyclerView) findViewById(R.id.movies_list);
-        recyclerView.setDrawingCacheEnabled(true);
-
-        layoutManager = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
-        layoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS);
-        recyclerView.setLayoutManager(layoutManager);
-
-        recyclerView.setAdapter(adapter);
 
     }
 
@@ -67,11 +52,6 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     @Override
     protected void onResume() {
         super.onResume();
-        if (!isSelectedTop) {
-            presenter.getPopularMovies();
-        }else  {
-            presenter.getTopRatedMovies();
-        }
     }
 
     @Override
@@ -86,17 +66,11 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
             case R.id.menu_popular:
                 if (!item.isChecked()) {
                     item.setChecked(true);
-                    presenter.getPopularMovies();
-                    isSelectedTop = false;
-                    Log.d(TAG, "onOptionsItemSelected: Popular button clicked");
                 }
                 break;
             case R.id.menu_top_rated:
                 if (!item.isChecked()) {
                     item.setChecked(true);
-                    presenter.getTopRatedMovies();
-                    isSelectedTop = true;
-                    Log.d(TAG, "onOptionsItemSelected: Top Rated button clicked");
                 }
                 break;
                 default:
@@ -111,20 +85,37 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         super.onSaveInstanceState(outState);
     }
 
-    @Override
-    public void setPresenter(MainContract.Presenter presenter) {
 
+    class FragmentPagerAdapter extends android.support.v4.app.FragmentPagerAdapter {
+
+        private static final int FRAG_NUM = 3;
+        public FragmentPagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            switch (position) {
+                case 0 : return new PopularFragment();
+                case 1 : return new TopRatedFragment();
+                case 2 : return new FavouriteFragment();
+                default: return null;
+            }
+        }
+
+        @Override
+        public int getCount() {
+            return FRAG_NUM;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            switch (position) {
+                case 0 : return "Popular";
+                case 1 : return "Top";
+                case 2 : return "Fav";
+                default: return null;
+            }
+        }
     }
-
-
-    @Override
-    public void displayMovies(Results results) {
-        adapter.swapData(results);
-    }
-
-    @Override
-    public void updateMovies(Results results) {
-
-    }
-
 }

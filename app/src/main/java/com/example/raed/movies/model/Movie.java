@@ -15,15 +15,18 @@ public class Movie implements Serializable{
     private double vote_average;
     private String poster_path;
     private String backdrop_path;
+    private int id;
 
 
-    public Movie(String title, String overview, String release_date, double vote_average, String poster_path, String backdrop_path) {
+    public Movie(String title, String overview, String release_date,
+                 double vote_average, String poster_path, String backdrop_path, int id) {
         this.title = title;
         this.overview = overview;
         this.release_date = release_date;
         this.vote_average = vote_average;
         this.poster_path = poster_path;
         this.backdrop_path = backdrop_path;
+        this.id = id;
     }
 
     public String getTitle() {
@@ -48,6 +51,10 @@ public class Movie implements Serializable{
 
     public String getBackdropPath() {
         return backdrop_path;
+    }
+
+    public int getId() {
+        return id;
     }
 
     @Override

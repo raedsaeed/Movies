@@ -16,10 +16,12 @@ public class MovieUrls {
     private static final String RATED_PATH = "top_rated";
     private static final String POPULAR_PATH = "popular";
     private static final String API_KEY_PARAMETER = "api_key";
-    private static final String API_KEY_VALUE = "api_key";
+    private static final String API_KEY_VALUE = "e8e45099ea41d0cba0510eae9bf80608";
     private static final String BASIC_IMAGE_URI = "http://image.tmdb.org/t/p";
     private static final String DEFAULT_IMAGE_SIZE = "w185";
     private static final String POSTER_IMAGE_SIZE = "w300";
+    private static final String VIDEOS = "videos";
+    private static final String REVIEWS = "reviews";
 
 
     public static URL getTopRatedUrl () {
@@ -74,6 +76,42 @@ public class MovieUrls {
                     .appendPath(POSTER_IMAGE_SIZE)
                     .appendEncodedPath(path)
                     .build();
+            return new URL(URLDecoder.decode(uri.toString(), "UTF-8"));
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+            return null;
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static URL getVidoeUrl (int id) {
+        try {
+            Uri uri = Uri.parse(BASIC_URI).buildUpon()
+                    .appendPath(String.valueOf(id))
+                    .appendPath(VIDEOS)
+                    .appendQueryParameter(API_KEY_PARAMETER, API_KEY_VALUE)
+                    .build();
+
+            return new URL(URLDecoder.decode(uri.toString(), "UTF-8"));
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+            return null;
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static URL getReviewUrl (int id) {
+        try {
+            Uri uri = Uri.parse(BASIC_URI).buildUpon()
+                    .appendPath(String.valueOf(id))
+                    .appendPath(REVIEWS)
+                    .appendQueryParameter(API_KEY_PARAMETER, API_KEY_VALUE)
+                    .build();
+
             return new URL(URLDecoder.decode(uri.toString(), "UTF-8"));
         } catch (MalformedURLException e) {
             e.printStackTrace();
