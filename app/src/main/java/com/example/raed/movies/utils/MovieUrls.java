@@ -2,6 +2,8 @@ package com.example.raed.movies.utils;
 
 import android.net.Uri;
 
+import com.example.raed.movies.BuildConfig;
+
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -16,7 +18,7 @@ public class MovieUrls {
     private static final String RATED_PATH = "top_rated";
     private static final String POPULAR_PATH = "popular";
     private static final String API_KEY_PARAMETER = "api_key";
-    private static final String API_KEY_VALUE = "e8e45099ea41d0cba0510eae9bf80608";
+    private static final String API_KEY_VALUE = "api_key";
     private static final String BASIC_IMAGE_URI = "http://image.tmdb.org/t/p";
     private static final String DEFAULT_IMAGE_SIZE = "w185";
     private static final String POSTER_IMAGE_SIZE = "w300";
@@ -91,7 +93,7 @@ public class MovieUrls {
             Uri uri = Uri.parse(BASIC_URI).buildUpon()
                     .appendPath(String.valueOf(id))
                     .appendPath(VIDEOS)
-                    .appendQueryParameter(API_KEY_PARAMETER, API_KEY_VALUE)
+                    .appendQueryParameter(API_KEY_PARAMETER, BuildConfig.MOVIE_API_KEY)
                     .build();
 
             return new URL(URLDecoder.decode(uri.toString(), "UTF-8"));
