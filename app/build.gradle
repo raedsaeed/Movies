@@ -1,5 +1,7 @@
 apply plugin: 'com.android.application'
+
 def MOVIE_API_KEY = '"'+MovieApiKey+'"'
+def YOUTUBE_API_KEY = '"'+YoutubeApiKey+'"'
 
 android {
     compileSdkVersion 26
@@ -12,6 +14,7 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary true
         buildConfigField("String", "MOVIE_API_KEY", MOVIE_API_KEY)
+        buildConfigField("String", "YOUTUBE_API_KEY", YOUTUBE_API_KEY)
     }
     buildTypes {
         release {
@@ -39,10 +42,10 @@ dependencies {
     //Gson dependency
     compile 'com.google.code.gson:gson:2.8.0'
     implementation 'com.squareup.picasso:picasso:2.5.2'
-
     //Glide dependency
-//    implementation("com.github.bumptech.glide:glide:4.4.0") {
-//        exclude group: "com.android.support"
-//    }
-//    annotationProcessor 'com.github.bumptech.glide:compiler:4.4.0'
+    //    implementation("com.github.bumptech.glide:glide:4.4.0") {
+    //        exclude group: "com.android.support"
+    //    }
+    //    annotationProcessor 'com.github.bumptech.glide:compiler:4.4.0'
+    implementation files('libs/YouTubeAndroidPlayerApi.jar')
 }

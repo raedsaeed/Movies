@@ -1,6 +1,6 @@
 package com.example.raed.movies;
 
-import com.example.raed.movies.model.Results;
+import com.example.raed.movies.model.MovieResults;
 import com.example.raed.movies.view_presenter.BasePresenter;
 import com.example.raed.movies.view_presenter.BaseView;
 
@@ -17,9 +17,9 @@ public interface MainContract {
     }
 
     interface View extends BaseView<Presenter> {
-        void displayMovies (Results results);
+        void displayMovies (MovieResults results);
 
-        void updateMovies (Results results);
+        void updateMovies (MovieResults results);
 
     }
 }

@@ -7,10 +7,10 @@ import java.util.List;
  * Created by raed on 2/19/18.
  */
 
-public class Results {
+public class MovieResults {
     private List<Movie> results;
 
-    public Results () {
+    public MovieResults() {
         results = new ArrayList<>();
     }
 

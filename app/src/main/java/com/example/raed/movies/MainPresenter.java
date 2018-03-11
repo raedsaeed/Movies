@@ -3,7 +3,7 @@ package com.example.raed.movies;
 import android.content.Context;
 
 import com.android.volley.VolleyError;
-import com.example.raed.movies.model.Results;
+import com.example.raed.movies.model.MovieResults;
 import com.example.raed.movies.utils.MovieUrls;
 import com.example.raed.movies.utils.NetworkManager;
 
@@ -51,7 +51,7 @@ public class MainPresenter implements MainContract.Presenter, NetworkManager.Com
     }
 
     @Override
-    public void successfulRequest(Results results) {
+    public void successfulRequest(MovieResults results) {
         if (results != null) {
             view.displayMovies(results);
         }

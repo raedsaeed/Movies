@@ -2,9 +2,7 @@ package com.example.raed.movies;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +10,7 @@ import android.widget.ImageView;
 
 import com.example.raed.movies.details.DetailActivity;
 import com.example.raed.movies.model.Movie;
-import com.example.raed.movies.model.Results;
+import com.example.raed.movies.model.MovieResults;
 import com.example.raed.movies.utils.MovieUrls;
 import com.squareup.picasso.Picasso;
 
@@ -25,7 +23,7 @@ import java.net.URL;
 public class ViewAdapter extends RecyclerView.Adapter<ViewAdapter.ViewHolder>{
     private static final String TAG = "ViewAdapter";
     private Context context;
-    private Results results;
+    private MovieResults results;
 
     public ViewAdapter (Context context) {
         this.context = context;
@@ -58,7 +56,7 @@ public class ViewAdapter extends RecyclerView.Adapter<ViewAdapter.ViewHolder>{
     }
 
 
-    public void swapData (Results results) {
+    public void swapData (MovieResults results) {
         this.results = null;
         this.results = results;
         notifyDataSetChanged();

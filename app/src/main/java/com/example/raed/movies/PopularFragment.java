@@ -11,7 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.raed.movies.model.Results;
+import com.example.raed.movies.model.MovieResults;
 
 /**
  * Created by raed on 3/7/18.
@@ -69,12 +69,12 @@ public class PopularFragment extends Fragment implements MainContract.View{
     }
 
     @Override
-    public void displayMovies(Results results) {
+    public void displayMovies(MovieResults results) {
         adapter.swapData(results);
     }
 
     @Override
-    public void updateMovies(Results results) {
+    public void updateMovies(MovieResults results) {
 
     }
 }

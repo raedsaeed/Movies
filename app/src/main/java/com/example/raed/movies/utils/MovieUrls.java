@@ -18,7 +18,6 @@ public class MovieUrls {
     private static final String RATED_PATH = "top_rated";
     private static final String POPULAR_PATH = "popular";
     private static final String API_KEY_PARAMETER = "api_key";
-    private static final String API_KEY_VALUE = "api_key";
     private static final String BASIC_IMAGE_URI = "http://image.tmdb.org/t/p";
     private static final String DEFAULT_IMAGE_SIZE = "w185";
     private static final String POSTER_IMAGE_SIZE = "w300";
@@ -30,7 +29,7 @@ public class MovieUrls {
         try {
             Uri uri = Uri.parse(BASIC_URI).buildUpon()
                     .appendPath(RATED_PATH)
-                    .appendQueryParameter(API_KEY_PARAMETER, API_KEY_VALUE)
+                    .appendQueryParameter(API_KEY_PARAMETER, BuildConfig.MOVIE_API_KEY)
                     .build();
 
             return new URL(uri.toString());
@@ -44,7 +43,7 @@ public class MovieUrls {
         try {
             Uri uri = Uri.parse(BASIC_URI).buildUpon()
                     .appendPath(POPULAR_PATH)
-                    .appendQueryParameter(API_KEY_PARAMETER, API_KEY_VALUE)
+                    .appendQueryParameter(API_KEY_PARAMETER, BuildConfig.MOVIE_API_KEY)
                     .build();
 
             return new URL(uri.toString());
@@ -111,7 +110,7 @@ public class MovieUrls {
             Uri uri = Uri.parse(BASIC_URI).buildUpon()
                     .appendPath(String.valueOf(id))
                     .appendPath(REVIEWS)
-                    .appendQueryParameter(API_KEY_PARAMETER, API_KEY_VALUE)
+                    .appendQueryParameter(API_KEY_PARAMETER, BuildConfig.MOVIE_API_KEY)
                     .build();
 
             return new URL(URLDecoder.decode(uri.toString(), "UTF-8"));

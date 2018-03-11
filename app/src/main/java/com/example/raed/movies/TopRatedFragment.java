@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
@@ -12,7 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.raed.movies.model.Results;
+import com.example.raed.movies.model.MovieResults;
 
 /**
  * Created by raed on 3/6/18.
@@ -27,8 +26,6 @@ public class TopRatedFragment extends Fragment implements MainContract.View{
     ViewAdapter adapter;
 
     RecyclerView recyclerView;
-
-    boolean isSelectedTop = false;
 
     StaggeredGridLayoutManager layoutManager;
     public TopRatedFragment () {
@@ -52,7 +49,6 @@ public class TopRatedFragment extends Fragment implements MainContract.View{
         recyclerView.setDrawingCacheEnabled(true);
 
         layoutManager = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
-//        GridLayoutManager layoutManager = new GridLayoutManager(context, 2);
         layoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS);
         recyclerView.setLayoutManager(layoutManager);
 
@@ -72,12 +68,12 @@ public class TopRatedFragment extends Fragment implements MainContract.View{
     }
 
     @Override
-    public void displayMovies(Results results) {
+    public void displayMovies(MovieResults results) {
         adapter.swapData(results);
     }
 
     @Override
-    public void updateMovies(Results results) {
+    public void updateMovies(MovieResults results) {
 
     }
 }

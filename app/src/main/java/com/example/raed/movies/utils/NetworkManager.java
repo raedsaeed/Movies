@@ -9,7 +9,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.raed.movies.model.Results;
+import com.example.raed.movies.model.MovieResults;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -28,7 +28,7 @@ public class NetworkManager {
     }
 
     public interface CompletedRequest {
-        void successfulRequest (Results results);
+        void successfulRequest (MovieResults results);
         void failureRequest (VolleyError error);
     }
 
@@ -38,8 +38,8 @@ public class NetworkManager {
             @Override
             public void onResponse(String response) {
                 Gson gson = new GsonBuilder().create();
-                Results results = new Results();
-                results = gson.fromJson(response, Results.class);
+                MovieResults results = new MovieResults();
+                results = gson.fromJson(response, MovieResults.class);
                 Log.d(NetworkManager.class.getSimpleName(), "onResponse: " + results.getResults().size());
                 request.successfulRequest(results);
             }
