@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 
-def MOVIE_API_KEY = '"'+MovieApiKey+'"'
-def YOUTUBE_API_KEY = '"'+YoutubeApiKey+'"'
+def MOVIE_API_KEY = '"' + MovieApiKey + '"'
+def YOUTUBE_API_KEY = '"' + YoutubeApiKey + '"'
 
 android {
     compileSdkVersion 26

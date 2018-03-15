@@ -6,12 +6,19 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+
+import com.example.raed.movies.model.MovieTrailers;
+import com.google.android.youtube.player.YouTubePlayerView;
 
 import com.example.raed.movies.MainActivity;
 import com.example.raed.movies.R;
@@ -30,6 +37,10 @@ public class DetailActivity extends AppCompatActivity implements DetailContract.
     TextView title, date, overveiw;
 
     ImageView cover;
+
+    RecyclerView trailerRecyclerView;
+
+    TrailerAdapter trailerAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,12 +53,17 @@ public class DetailActivity extends AppCompatActivity implements DetailContract.
         }
 
         presenter = new DetailPresenter(this);
+        trailerAdapter = new TrailerAdapter(this);
 
         ratingBar = (RatingBar)findViewById(R.id.rate_bar);
         title = (TextView)findViewById(R.id.title);
         date = (TextView)findViewById(R.id.release_date);
         overveiw = (TextView)findViewById(R.id.overview);
         cover = (ImageView) findViewById(R.id.cover);
+        trailerRecyclerView = (RecyclerView) findViewById(R.id.trailer_list);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        trailerRecyclerView.setLayoutManager(layoutManager);
+        trailerRecyclerView.setAdapter(trailerAdapter);
     }
 
     @Override
@@ -60,6 +76,12 @@ public class DetailActivity extends AppCompatActivity implements DetailContract.
             presenter.fetchMovie(movie);
             Log.d(TAG, "onCreate: Got the object");
         }
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        return super.onOptionsItemSelected(item);
 
     }
 
@@ -87,4 +109,10 @@ public class DetailActivity extends AppCompatActivity implements DetailContract.
         this.overveiw.setText(overView);
         this.date.setText(date);
     }
+
+    @Override
+    public void showTrailers(MovieTrailers trailers) {
+        trailerAdapter.loadData(trailers);
+    }
+
 }

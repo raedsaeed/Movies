@@ -5,7 +5,8 @@ import android.content.Context;
 import com.android.volley.VolleyError;
 import com.example.raed.movies.model.MovieResults;
 import com.example.raed.movies.utils.MovieUrls;
-import com.example.raed.movies.utils.NetworkManager;
+import com.example.raed.movies.utils.BasicManager;
+import com.example.raed.movies.view_presenter.BaseRequest;
 
 import java.net.URL;
 
@@ -13,12 +14,12 @@ import java.net.URL;
  * Created by raed on 2/19/18.
  */
 
-public class MainPresenter implements MainContract.Presenter, NetworkManager.CompletedRequest{
+public class MainPresenter implements MainContract.Presenter, BaseRequest.CompletedMovieRequest{
     private MainContract.View view;
-    private NetworkManager networkManager;
+    private BasicManager.MovieRequest movieReqest;
 
     public MainPresenter (Context context, MainContract.View view) {
-        networkManager = new NetworkManager(context, this);
+        movieReqest = new BasicManager.MovieRequest(context, this);
         this.view = view;
     }
 
@@ -35,7 +36,7 @@ public class MainPresenter implements MainContract.Presenter, NetworkManager.Com
         if (url != null) {
             popularUrl = url.toString();
         }
-        networkManager.fetchData(popularUrl);
+        movieReqest.fetchData(popularUrl);
     }
 
     @Override
@@ -47,18 +48,18 @@ public class MainPresenter implements MainContract.Presenter, NetworkManager.Com
             topRatedUrl = url.toString();
         }
 
-        networkManager.fetchData(topRatedUrl);
+        movieReqest.fetchData(topRatedUrl);
     }
 
     @Override
-    public void successfulRequest(MovieResults results) {
-        if (results != null) {
-            view.displayMovies(results);
+    public void onError(VolleyError error) {
+
+    }
+
+    @Override
+    public void onSuccessfulMovieRequest(MovieResults movieResults) {
+        if (movieResults != null) {
+            view.displayMovies(movieResults);
         }
-    }
-
-    @Override
-    public void failureRequest(VolleyError error) {
-
     }
 }

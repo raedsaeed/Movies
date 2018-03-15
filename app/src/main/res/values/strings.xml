@@ -7,4 +7,5 @@
     <string name="title_activity_detail">DetailActivity</string>
     <string name="poster">Poster</string>
     <string name="title_text">Title :</string>
+    <string name="title_activity_main2">Main2Activity</string>
 </resources>
