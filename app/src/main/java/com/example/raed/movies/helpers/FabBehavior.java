@@ -39,10 +39,7 @@ public class FabBehavior extends FloatingActionButton.Behavior {
                     child.setVisibility(View.INVISIBLE);
                 }
             });
-
-            Log.d(TAG, "onNestedScroll: Scrolled up --- dyConsumed : " + dyConsumed + " : dyUnconsumed " + dyUnconsumed);
         } else if (dyUnconsumed <0 && child.getVisibility() != View.VISIBLE) {
-            Log.d(TAG, "onNestedScroll: Scrolled down --- dyConsumed : " + dyConsumed + " : dyUnconsumed " + dyUnconsumed);
             child.show();
         }
     }

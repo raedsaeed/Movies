@@ -22,20 +22,20 @@
             tools:showIn="@layout/activity_detail"
             >
 
-            <ImageView
-                android:id="@+id/backdrop"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:adjustViewBounds="true"
-                android:contentDescription="@string/poster"
-                android:scaleType="fitCenter"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0"
-                tools:srcCompat="@drawable/test" />
+            <!--<ImageView-->
+                <!--android:id="@+id/backdrop"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginBottom="8dp"-->
+                <!--android:adjustViewBounds="true"-->
+                <!--android:contentDescription="@string/poster"-->
+                <!--android:scaleType="fitCenter"-->
+                <!--app:layout_constraintEnd_toEndOf="parent"-->
+                <!--app:layout_constraintHorizontal_bias="0.0"-->
+                <!--app:layout_constraintStart_toStartOf="parent"-->
+                <!--app:layout_constraintTop_toTopOf="parent"-->
+                <!--app:layout_constraintVertical_bias="0.0"-->
+                <!--tools:srcCompat="@drawable/test" />-->
 
             <TextView
                 android:id="@+id/title"
@@ -45,13 +45,12 @@
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="4dp"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@id/rate_bar"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/backdrop"
+                app:layout_constraintTop_toTopOf="parent"
                 tools:text="Dilwale Dulhania Le Jayenge" />
 
             <RatingBar

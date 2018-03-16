@@ -30,7 +30,7 @@ public class DetailActivity extends AppCompatActivity implements DetailContract.
 
     RatingBar ratingBar;
 
-    TextView title, date, overveiw;
+    TextView tvTitle, tvDate, tvOverview;
 
     ImageView cover;
 
@@ -53,9 +53,9 @@ public class DetailActivity extends AppCompatActivity implements DetailContract.
 
 
         ratingBar = (RatingBar)findViewById(R.id.rate_bar);
-        title = (TextView)findViewById(R.id.title);
-        date = (TextView)findViewById(R.id.release_date);
-        overveiw = (TextView)findViewById(R.id.overview);
+        tvTitle = (TextView)findViewById(R.id.title);
+        tvDate = (TextView)findViewById(R.id.release_date);
+        tvOverview = (TextView)findViewById(R.id.overview);
         cover = (ImageView) findViewById(R.id.cover);
         trailerRecyclerView = (RecyclerView) findViewById(R.id.trailer_list);
         fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -111,9 +111,9 @@ public class DetailActivity extends AppCompatActivity implements DetailContract.
 
     @Override
     public void showContent(String title, String overView, String date) {
-        this.title.setText(title);
-        this.overveiw.setText(overView);
-        this.date.setText(date);
+        this.tvTitle.setText(title);
+        this.tvOverview.setText(overView);
+        this.tvDate.setText(date);
     }
 
     @Override
