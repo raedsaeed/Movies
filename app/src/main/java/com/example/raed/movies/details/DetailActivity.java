@@ -53,7 +53,7 @@ public class DetailActivity extends AppCompatActivity implements DetailContract.
         }
 
         presenter = new DetailPresenter(this);
-        trailerAdapter = new TrailerAdapter(this);
+
 
         ratingBar = (RatingBar)findViewById(R.id.rate_bar);
         title = (TextView)findViewById(R.id.title);
@@ -61,9 +61,7 @@ public class DetailActivity extends AppCompatActivity implements DetailContract.
         overveiw = (TextView)findViewById(R.id.overview);
         cover = (ImageView) findViewById(R.id.cover);
         trailerRecyclerView = (RecyclerView) findViewById(R.id.trailer_list);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        trailerRecyclerView.setLayoutManager(layoutManager);
-        trailerRecyclerView.setAdapter(trailerAdapter);
+
     }
 
     @Override
@@ -76,7 +74,16 @@ public class DetailActivity extends AppCompatActivity implements DetailContract.
             presenter.fetchMovie(movie);
             Log.d(TAG, "onCreate: Got the object");
         }
+        trailerAdapter = new TrailerAdapter(this);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        trailerRecyclerView.setLayoutManager(layoutManager);
+        trailerRecyclerView.setAdapter(trailerAdapter);
+    }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        trailerAdapter = null;
     }
 
     @Override
