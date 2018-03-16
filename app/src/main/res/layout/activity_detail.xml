@@ -50,9 +50,8 @@
             android:id="@+id/nested_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fillViewport="true"
             android:scrollbars="none"
-            android:layout_gravity="fill_vertical"
+            android:layout_gravity="top"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <LinearLayout
@@ -73,8 +72,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
             android:layout_margin="@dimen/fab_margin"
+            android:focusable="true"
             app:layout_behavior="com.example.raed.movies.helpers.FabBehavior"
-            android:fitsSystemWindows="true"
             app:srcCompat="@drawable/ic_favourite_white"
             />
 

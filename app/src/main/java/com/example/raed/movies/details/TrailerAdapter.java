@@ -1,7 +1,6 @@
 package com.example.raed.movies.details;
 
 import android.app.Activity;
-import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -17,8 +16,6 @@ import com.example.raed.movies.model.MovieTrailers;
 import com.example.raed.movies.model.Trailer;
 import com.google.android.youtube.player.YouTubeApiServiceUtil;
 import com.google.android.youtube.player.YouTubeInitializationResult;
-import com.google.android.youtube.player.YouTubePlayer;
-import com.google.android.youtube.player.YouTubePlayerView;
 import com.google.android.youtube.player.YouTubeStandalonePlayer;
 import com.google.android.youtube.player.YouTubeThumbnailLoader;
 import com.google.android.youtube.player.YouTubeThumbnailView;
@@ -50,7 +47,7 @@ public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.YoutubeV
         YouTubeInitializationResult result = YouTubeApiServiceUtil.isYouTubeApiServiceAvailable(context);
         if (youtubeViewIsChecked) {
             youtubeViewIsChecked = false;
-            holder.youtubePlayerView.initialize(BuildConfig.YOUTUBE_API_KEY, new YouTubeThumbnailView.OnInitializedListener() {
+            holder.youtubeThumbnailView.initialize(BuildConfig.YOUTUBE_API_KEY, new YouTubeThumbnailView.OnInitializedListener() {
                 @Override
                 public void onInitializationSuccess(YouTubeThumbnailView youTubeThumbnailView, final YouTubeThumbnailLoader youTubeThumbnailLoader) {
                     youTubeThumbnailLoader.setVideo(trailer.getKey());
@@ -91,12 +88,12 @@ public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.YoutubeV
     }
 
     class YoutubeViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-//        YouTubePlayerView youtubePlayerView;
-        YouTubeThumbnailView youtubePlayerView;
+//        YouTubePlayerView youtubeThumbnailView;
+        YouTubeThumbnailView youtubeThumbnailView;
         public YoutubeViewHolder(View itemView) {
             super(itemView);
-            youtubePlayerView = itemView.findViewById(R.id.youtube_video);
-            youtubePlayerView.setOnClickListener(this);
+            youtubeThumbnailView = itemView.findViewById(R.id.youtube_video);
+            youtubeThumbnailView.setOnClickListener(this);
         }
 
         @Override
@@ -104,7 +101,8 @@ public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.YoutubeV
             int position = getAdapterPosition();
             final Trailer trailer = trailers.getTrailers().get(position);
             if (trailer != null) {
-                Intent intent = YouTubeStandalonePlayer.createVideoIntent((Activity)context, BuildConfig.YOUTUBE_API_KEY, trailer.getKey());
+                Intent intent = YouTubeStandalonePlayer.createVideoIntent((Activity)context, BuildConfig.YOUTUBE_API_KEY, trailer.getKey(),
+                        0, true, true);
                 context.startActivity(intent);
             }
         }

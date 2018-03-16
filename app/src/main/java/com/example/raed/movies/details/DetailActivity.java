@@ -3,14 +3,11 @@ package com.example.raed.movies.details;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -18,14 +15,13 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.example.raed.movies.model.MovieTrailers;
-import com.google.android.youtube.player.YouTubePlayerView;
 
 import com.example.raed.movies.MainActivity;
 import com.example.raed.movies.R;
 import com.example.raed.movies.model.Movie;
 import com.squareup.picasso.Picasso;
 
-public class DetailActivity extends AppCompatActivity implements DetailContract.View{
+public class DetailActivity extends AppCompatActivity implements DetailContract.View, View.OnClickListener{
     private static final String TAG = "DetailActivity";
 
     private Movie movie;
@@ -41,6 +37,7 @@ public class DetailActivity extends AppCompatActivity implements DetailContract.
     RecyclerView trailerRecyclerView;
 
     TrailerAdapter trailerAdapter;
+    FloatingActionButton fab;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +58,8 @@ public class DetailActivity extends AppCompatActivity implements DetailContract.
         overveiw = (TextView)findViewById(R.id.overview);
         cover = (ImageView) findViewById(R.id.cover);
         trailerRecyclerView = (RecyclerView) findViewById(R.id.trailer_list);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(this);
 
     }
 
@@ -122,4 +121,8 @@ public class DetailActivity extends AppCompatActivity implements DetailContract.
         trailerAdapter.loadData(trailers);
     }
 
+    @Override
+    public void onClick(View view) {
+        Log.d(TAG, "onClick: Fab clicked");
+    }
 }
