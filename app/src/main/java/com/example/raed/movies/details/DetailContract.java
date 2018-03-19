@@ -15,6 +15,8 @@ public interface DetailContract {
 
     interface Presenter extends BasePresenter{
         void fetchMovie (Movie movie);
+        void favMovie (Movie movie);
+        void unFavMovie (Movie movie);
     }
 
     interface View extends BaseView<Presenter> {

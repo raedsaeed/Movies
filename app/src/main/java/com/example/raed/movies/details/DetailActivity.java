@@ -1,5 +1,7 @@
 package com.example.raed.movies.details;
 
+import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -7,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.test.suitebuilder.annotation.Smoke;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,6 +22,7 @@ import com.example.raed.movies.model.MovieTrailers;
 import com.example.raed.movies.MainActivity;
 import com.example.raed.movies.R;
 import com.example.raed.movies.model.Movie;
+import com.example.raed.movies.model.local.MovieContract;
 import com.squareup.picasso.Picasso;
 
 public class DetailActivity extends AppCompatActivity implements DetailContract.View, View.OnClickListener{
@@ -123,6 +127,7 @@ public class DetailActivity extends AppCompatActivity implements DetailContract.
 
     @Override
     public void onClick(View view) {
-        Log.d(TAG, "onClick: Fab clicked");
+        presenter.favMovie(movie);
+        Log.d(TAG, "onClick : data inserted into data base ");
     }
 }

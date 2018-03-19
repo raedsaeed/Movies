@@ -17,4 +17,8 @@ public class MovieResults {
     public List<Movie> getResults() {
         return results;
     }
+
+    public void addMovie (Movie movie) {
+        this.results.add(movie);
+    }
 }

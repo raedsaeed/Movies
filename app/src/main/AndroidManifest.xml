@@ -31,6 +31,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
+
+        <provider
+            android:authorities="com.example.raed.movies"
+            android:name=".model.local.MovieContentProvider"/>
     </application>
 
 </manifest>

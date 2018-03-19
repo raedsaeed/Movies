@@ -14,6 +14,8 @@ public interface MainContract {
         void getPopularMovies();
 
         void getTopRatedMovies();
+
+        void getLocalMovies ();
     }
 
     interface View extends BaseView<Presenter> {
