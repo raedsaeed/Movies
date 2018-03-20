@@ -16,6 +16,7 @@ public class Movie implements Serializable{
     private String poster_path;
     private String backdrop_path;
     private int id;
+    private boolean isFavourite;
 
 
     public Movie(String title, String overview, String release_date,
@@ -27,6 +28,7 @@ public class Movie implements Serializable{
         this.poster_path = poster_path;
         this.backdrop_path = backdrop_path;
         this.id = id;
+        isFavourite = false;
     }
 
     public String getTitle() {
@@ -55,6 +57,14 @@ public class Movie implements Serializable{
 
     public int getId() {
         return id;
+    }
+
+    public boolean isFavourite() {
+        return isFavourite;
+    }
+
+    public void setFavourite(boolean favourite) {
+        isFavourite = favourite;
     }
 
     @Override

@@ -1,5 +1,7 @@
 package com.example.raed.movies.model.local;
 
+import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
@@ -75,7 +77,9 @@ public class Interceptor implements LoaderManager.LoaderCallbacks<Cursor> {
             String backPath = data.getString(data.getColumnIndex(MovieContract.MovieEntry.COLUMN_BACKDROP_PATH));
             float rate = data.getFloat(data.getColumnIndex(MovieContract.MovieEntry.COLUMN_RATE));
             int id = data.getInt(data.getColumnIndex(MovieContract.MovieEntry.COLUMN_MOVIE_ID));
-            results.addMovie(new Movie(title, overView, releaseDate, rate, posterPath, backPath, id));
+            Movie movie = new Movie(title, overView, releaseDate, rate, posterPath, backPath, id);
+            movie.setFavourite(true);
+            results.addMovie(movie);
         }
         data.moveToPosition(-1);
         dataLoader.onLocalDataLoaded(results);
@@ -84,6 +88,26 @@ public class Interceptor implements LoaderManager.LoaderCallbacks<Cursor> {
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
 
+    }
+
+    public void addMovie (Movie movie) {
+        ContentResolver resolver = context.getContentResolver();
+        ContentValues values = new ContentValues();
+        values.put(MovieContract.MovieEntry.COLUMN_TITLE, movie.getTitle());
+        values.put(MovieContract.MovieEntry.COLUMN_OVERVIEW, movie.getOverview());
+        values.put(MovieContract.MovieEntry.COLUMN_MOVIE_ID, movie.getId());
+        values.put(MovieContract.MovieEntry.COLUMN_RELEASE_DATE, movie.gerReleaseDate());
+        values.put(MovieContract.MovieEntry.COLUMN_RATE, movie.gerVoteAverage());
+        values.put(MovieContract.MovieEntry.COLUMN_BACKDROP_PATH, movie.getBackdropPath());
+        values.put(MovieContract.MovieEntry.COLUMN_POSTER_PATH, movie.getPosterPath());
+        resolver.insert(MovieContract.MovieEntry.CONTENT_URI, values);
+    }
+    public void deleteMovie (Movie movie) {
+        Uri uri = MovieContract.MovieEntry.CONTENT_URI.buildUpon()
+                .appendPath(String.valueOf(movie.getId()))
+                .build();
+        int deleted = appCompatActivity.getContentResolver().delete(uri, null, null);
+        Log.d(TAG, "deleteMovie: " + deleted);
     }
 
 }
