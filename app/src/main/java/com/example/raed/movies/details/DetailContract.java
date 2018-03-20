@@ -17,6 +17,7 @@ public interface DetailContract {
         void fetchMovie (Movie movie);
         void favMovie (Movie movie);
         void unFavMovie (Movie movie);
+        void findMovie (Movie movie);
     }
 
     interface View extends BaseView<Presenter> {
@@ -24,5 +25,6 @@ public interface DetailContract {
         void showPoster (String url);
         void showContent (String title, String overView, String date);
         void showTrailers (MovieTrailers trailers);
+        void changeFavButtonColor ();
     }
 }

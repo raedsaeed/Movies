@@ -12,6 +12,7 @@ import com.example.raed.movies.details.DetailActivity;
 import com.example.raed.movies.model.Movie;
 import com.example.raed.movies.model.MovieResults;
 import com.example.raed.movies.utils.MovieUrls;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.net.URL;
@@ -44,6 +45,7 @@ public class ViewAdapter extends RecyclerView.Adapter<ViewAdapter.ViewHolder>{
             if (image != null) {
                 Picasso.with(context)
                         .load(image.toString())
+                        .networkPolicy(NetworkPolicy.OFFLINE)
                         .placeholder(R.drawable.ic_image_black_24dp)
                         .into(holder.poster);
             }

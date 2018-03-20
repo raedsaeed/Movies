@@ -82,7 +82,7 @@ public class BasicManager {
                     MovieTrailers results = new MovieTrailers();
                     results = gson.fromJson(response, MovieTrailers.class);
                     Log.d(BasicManager.class.getSimpleName(), "onResponse: " + results.getTrailers().size());
-                    trailerRequest.onSuccessfullTrailerRequest(results);
+                    trailerRequest.onSuccessfulTrailerRequest(results);
                 }
             }, new Response.ErrorListener() {
                 @Override

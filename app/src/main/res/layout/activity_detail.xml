@@ -75,7 +75,7 @@
             android:focusable="true"
             app:backgroundTint="@color/accent"
             app:layout_behavior="com.example.raed.movies.helpers.FabBehavior"
-            app:srcCompat="@drawable/ic_favorite_black_24dp"
+            app:srcCompat="@drawable/ic_favorite_border_black_24dp"
             />
 
     </android.support.design.widget.CoordinatorLayout>

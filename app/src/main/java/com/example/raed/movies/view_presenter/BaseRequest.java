@@ -12,7 +12,7 @@ public interface BaseRequest {
     void onError (VolleyError error);
 
     interface CompletedTrailerRequest extends BaseRequest {
-        void onSuccessfullTrailerRequest (MovieTrailers trailers);
+        void onSuccessfulTrailerRequest(MovieTrailers trailers);
     }
 
     interface CompletedMovieRequest extends BaseRequest {

@@ -24,6 +24,9 @@ public class Interceptor implements LoaderManager.LoaderCallbacks<Cursor> {
     private Context context;
     private LocalDataLoader dataLoader;
     private AppCompatActivity appCompatActivity;
+    private Movie movieToFind;
+    private boolean search;
+    private LoadAndSearch loadAndSearch;
 
     private static final int ID_MOVIE_LOADER = 315;
     private static String [] projection = new String[] {
@@ -40,14 +43,32 @@ public class Interceptor implements LoaderManager.LoaderCallbacks<Cursor> {
         void onLocalDataLoaded (MovieResults results);
     }
 
+    public interface LoadAndSearch {
+        void onFindMovie ();
+    }
+
     public Interceptor (Context context, LocalDataLoader loader) {
         this.context = context;
         appCompatActivity = (AppCompatActivity) context;
         this.dataLoader = loader;
+        this.search = false;
+    }
+
+    public Interceptor (Context context, LoadAndSearch loadAndSearch) {
+        this.context = context;
+        appCompatActivity = (AppCompatActivity) context;
+        this.loadAndSearch = loadAndSearch;
+        this.search = false;
     }
 
     public void loadFromStorage () {
         appCompatActivity.getSupportLoaderManager().initLoader(ID_MOVIE_LOADER, null, this);
+    }
+
+    public void loadAndSearch (Movie movie) {
+        this.movieToFind = movie;
+        this.search = true;
+        appCompatActivity.getSupportLoaderManager().initLoader(ID_MOVIE_LOADER, null,this);
     }
 
     @Override
@@ -68,21 +89,31 @@ public class Interceptor implements LoaderManager.LoaderCallbacks<Cursor> {
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        MovieResults results = new MovieResults();
-        while (data.moveToNext()) {
-            String title = data.getString(data.getColumnIndex(MovieContract.MovieEntry.COLUMN_TITLE));
-            String overView = data.getString(data.getColumnIndex(MovieContract.MovieEntry.COLUMN_OVERVIEW));
-            String releaseDate = data.getString(data.getColumnIndex(MovieContract.MovieEntry.COLUMN_RELEASE_DATE));
-            String posterPath = data.getString(data.getColumnIndex(MovieContract.MovieEntry.COLUMN_POSTER_PATH));
-            String backPath = data.getString(data.getColumnIndex(MovieContract.MovieEntry.COLUMN_BACKDROP_PATH));
-            float rate = data.getFloat(data.getColumnIndex(MovieContract.MovieEntry.COLUMN_RATE));
-            int id = data.getInt(data.getColumnIndex(MovieContract.MovieEntry.COLUMN_MOVIE_ID));
-            Movie movie = new Movie(title, overView, releaseDate, rate, posterPath, backPath, id);
-            movie.setFavourite(true);
-            results.addMovie(movie);
+        if (search) {
+            while (data.moveToNext()) {
+                int id = data.getInt(data.getColumnIndex(MovieContract.MovieEntry.COLUMN_MOVIE_ID));
+                if (movieToFind.getId() == id){
+                    loadAndSearch.onFindMovie();
+                }
+            }
         }
-        data.moveToPosition(-1);
-        dataLoader.onLocalDataLoaded(results);
+        else {
+            MovieResults results = new MovieResults();
+            while (data.moveToNext()) {
+                String title = data.getString(data.getColumnIndex(MovieContract.MovieEntry.COLUMN_TITLE));
+                String overView = data.getString(data.getColumnIndex(MovieContract.MovieEntry.COLUMN_OVERVIEW));
+                String releaseDate = data.getString(data.getColumnIndex(MovieContract.MovieEntry.COLUMN_RELEASE_DATE));
+                String posterPath = data.getString(data.getColumnIndex(MovieContract.MovieEntry.COLUMN_POSTER_PATH));
+                String backPath = data.getString(data.getColumnIndex(MovieContract.MovieEntry.COLUMN_BACKDROP_PATH));
+                float rate = data.getFloat(data.getColumnIndex(MovieContract.MovieEntry.COLUMN_RATE));
+                int id = data.getInt(data.getColumnIndex(MovieContract.MovieEntry.COLUMN_MOVIE_ID));
+                Movie movie = new Movie(title, overView, releaseDate, rate, posterPath, backPath, id);
+                movie.setFavourite(true);
+                results.addMovie(movie);
+            }
+            data.moveToPosition(-1);
+            dataLoader.onLocalDataLoaded(results);
+        }
     }
 
     @Override

@@ -21,7 +21,8 @@ import java.net.URL;
  * Created by raed on 2/27/18.
  */
 
-public class DetailPresenter implements DetailContract.Presenter, BaseRequest.CompletedTrailerRequest{
+public class DetailPresenter implements DetailContract.Presenter,
+        BaseRequest.CompletedTrailerRequest, Interceptor.LoadAndSearch{
     private static final String TAG = "DetailPresenter";
 
     private DetailContract.View detailView;
@@ -33,7 +34,7 @@ public class DetailPresenter implements DetailContract.Presenter, BaseRequest.Co
         detailView = (DetailContract.View) context;
         trailerRequest = new BasicManager.TrailerRequest(context, this);
         this.context = context;
-        interceptor = new Interceptor(context, null);
+        interceptor = new Interceptor(context, this);
     }
 
     @Override
@@ -69,6 +70,10 @@ public class DetailPresenter implements DetailContract.Presenter, BaseRequest.Co
         interceptor.deleteMovie(movie);
     }
 
+    @Override
+    public void findMovie(Movie movie) {
+        interceptor.loadAndSearch(movie);
+    }
 
     private String getCoverPath (String path) {
         URL url = MovieUrls.getPosterUrl(path);
@@ -92,8 +97,13 @@ public class DetailPresenter implements DetailContract.Presenter, BaseRequest.Co
     }
 
     @Override
-    public void onSuccessfullTrailerRequest(MovieTrailers trailers) {
+    public void onSuccessfulTrailerRequest(MovieTrailers trailers) {
         Log.d(TAG, "successfulTrailerRequest: " + trailers.getTrailers().size());
         detailView.showTrailers(trailers);
+    }
+
+    @Override
+    public void onFindMovie() {
+        detailView.changeFavButtonColor();
     }
 }

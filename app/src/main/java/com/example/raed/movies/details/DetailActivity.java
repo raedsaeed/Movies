@@ -71,14 +71,13 @@ public class DetailActivity extends AppCompatActivity implements DetailContract.
         Intent intent = getIntent();
         if (intent != null) {
             movie = (Movie) intent.getSerializableExtra(MainActivity.SELECTED_MOVIE);
-            presenter.fetchMovie(movie);
             if (movie.isFavourite()) {
-                fab.setImageResource(R.drawable.ic_favourite_red);
-                Log.d(TAG, "onCreate: Got the object favourite");
+                fab.setImageResource(R.drawable.ic_favorite_white_24dp);
             }else {
-                fab.setImageResource(R.drawable.ic_favourite_white);
-                Log.d(TAG, "onCreate: Got the object unfavourite");
+                fab.setImageResource(R.drawable.ic_favorite_border_black_24dp);
             }
+            presenter.findMovie(movie);
+            presenter.fetchMovie(movie);
 
         }
         trailerAdapter = new TrailerAdapter(this);
@@ -129,15 +128,23 @@ public class DetailActivity extends AppCompatActivity implements DetailContract.
         trailerAdapter.loadData(trailers);
     }
 
+
+    @Override
+    public void changeFavButtonColor() {
+        fab.setImageResource(R.drawable.ic_favorite_white_24dp);
+        movie.setFavourite(true);
+    }
+
     @Override
     public void onClick(View view) {
         if (!movie.isFavourite()) {
             presenter.favMovie(movie);
-            fab.setImageResource(R.drawable.ic_favourite_red);
+            fab.setImageResource(R.drawable.ic_favorite_white_24dp);
+            movie.setFavourite(true);
         }else {
             presenter.unFavMovie(movie);
-            fab.setImageResource(R.drawable.ic_favourite_white);
+            fab.setImageResource(R.drawable.ic_favorite_border_black_24dp);
+            movie.setFavourite(false);
         }
-        Log.d(TAG, "onClick : data inserted into data base ");
     }
 }
