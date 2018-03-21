@@ -2,6 +2,7 @@ package com.example.raed.movies.details;
 
 
 import com.example.raed.movies.model.Movie;
+import com.example.raed.movies.model.MovieReviews;
 import com.example.raed.movies.model.MovieTrailers;
 import com.example.raed.movies.view_presenter.BasePresenter;
 import com.example.raed.movies.view_presenter.BaseView;
@@ -25,6 +26,7 @@ public interface DetailContract {
         void showPoster (String url);
         void showContent (String title, String overView, String date);
         void showTrailers (MovieTrailers trailers);
+        void showReviews (MovieReviews reviews);
         void changeFavButtonColor ();
     }
 }

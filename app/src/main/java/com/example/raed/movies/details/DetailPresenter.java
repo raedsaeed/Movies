@@ -8,6 +8,7 @@ import android.util.Log;
 import com.android.volley.VolleyError;
 import com.example.raed.movies.model.Movie;
 import com.example.raed.movies.model.MovieResults;
+import com.example.raed.movies.model.MovieReviews;
 import com.example.raed.movies.model.MovieTrailers;
 import com.example.raed.movies.model.local.Interceptor;
 import com.example.raed.movies.model.local.MovieContract;
@@ -22,19 +23,21 @@ import java.net.URL;
  */
 
 public class DetailPresenter implements DetailContract.Presenter,
-        BaseRequest.CompletedTrailerRequest, Interceptor.LoadAndSearch{
+        BaseRequest.CompletedTrailerRequest, BaseRequest.CompletedReviewRequest, Interceptor.LoadAndSearch{
     private static final String TAG = "DetailPresenter";
 
     private DetailContract.View detailView;
     private BasicManager.TrailerRequest trailerRequest;
     private Context context;
     private Interceptor interceptor;
+    private BasicManager.ReviewRequest reviewRequest;
 
     public DetailPresenter (Context context) {
         detailView = (DetailContract.View) context;
         trailerRequest = new BasicManager.TrailerRequest(context, this);
         this.context = context;
         interceptor = new Interceptor(context, this);
+        reviewRequest = new BasicManager.ReviewRequest(context, this);
     }
 
     @Override
@@ -58,6 +61,9 @@ public class DetailPresenter implements DetailContract.Presenter,
 
         url = getMovieTrailer(movie.getId());
         trailerRequest.fetchVideosData(url);
+
+        url = getMovieReview(movie.getId());
+        reviewRequest.fetchVideosData(url);
     }
 
     @Override
@@ -91,6 +97,13 @@ public class DetailPresenter implements DetailContract.Presenter,
         return null;
     }
 
+    private String getMovieReview (int id) {
+        URL url = MovieUrls.getReviewUrl(id);
+        if (url != null) {
+            return url.toString();
+        }
+        return null;
+    }
     @Override
     public void onError(VolleyError error) {
 
@@ -98,12 +111,16 @@ public class DetailPresenter implements DetailContract.Presenter,
 
     @Override
     public void onSuccessfulTrailerRequest(MovieTrailers trailers) {
-        Log.d(TAG, "successfulTrailerRequest: " + trailers.getTrailers().size());
         detailView.showTrailers(trailers);
     }
 
     @Override
     public void onFindMovie() {
         detailView.changeFavButtonColor();
+    }
+
+    @Override
+    public void onSuccessfulReviewRequest(MovieReviews reviews) {
+        detailView.showReviews(reviews);
     }
 }

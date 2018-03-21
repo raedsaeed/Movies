@@ -10,6 +10,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.raed.movies.model.MovieResults;
+import com.example.raed.movies.model.MovieReviews;
 import com.example.raed.movies.model.MovieTrailers;
 import com.example.raed.movies.view_presenter.BaseRequest;
 import com.google.gson.Gson;
@@ -88,6 +89,38 @@ public class BasicManager {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     trailerRequest.onError(error);
+                }
+            });
+
+            RequestQueue requestQueue = Volley.newRequestQueue(context);
+            requestQueue.add(stringRequest);
+        }
+    }
+
+    public static class ReviewRequest extends BasicManager {
+        private Context context;
+        private BaseRequest.CompletedReviewRequest reviewRequest;
+        public ReviewRequest(Context context, BaseRequest.CompletedReviewRequest request) {
+            super(context, request);
+            this.context = context;
+            this.reviewRequest = request;
+        }
+
+        public void fetchVideosData(String url) {
+
+            StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    Gson gson = new GsonBuilder().create();
+                    MovieReviews results = new MovieReviews();
+                    results = gson.fromJson(response, MovieReviews.class);
+                    Log.d(BasicManager.class.getSimpleName(), "onResponse: " + results.getReviews().size());
+                    reviewRequest.onSuccessfulReviewRequest(results);
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    reviewRequest.onError(error);
                 }
             });
 

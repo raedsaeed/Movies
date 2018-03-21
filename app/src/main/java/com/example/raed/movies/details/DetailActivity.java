@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.example.raed.movies.model.MovieReviews;
 import com.example.raed.movies.model.MovieTrailers;
 
 import com.example.raed.movies.MainActivity;
@@ -35,10 +36,12 @@ public class DetailActivity extends AppCompatActivity implements DetailContract.
 
     ImageView cover;
 
-    RecyclerView trailerRecyclerView;
+    RecyclerView trailerRecyclerView, reviewRecyclerView;
 
     TrailerAdapter trailerAdapter;
     FloatingActionButton fab;
+
+    ReviewAdapter reviewAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,8 +62,21 @@ public class DetailActivity extends AppCompatActivity implements DetailContract.
         tvOverview = (TextView)findViewById(R.id.overview);
         cover = (ImageView) findViewById(R.id.cover);
         trailerRecyclerView = (RecyclerView) findViewById(R.id.trailer_list);
+        reviewRecyclerView = (RecyclerView) findViewById(R.id.review_list);
         fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(this);
+
+        trailerAdapter = new TrailerAdapter(this);
+        LinearLayoutManager trailerLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        trailerRecyclerView.setLayoutManager(trailerLayoutManager);
+        trailerRecyclerView.setAdapter(trailerAdapter);
+
+
+        reviewAdapter = new ReviewAdapter(this);
+        LinearLayoutManager reviewLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        reviewRecyclerView.setNestedScrollingEnabled(false);
+        reviewRecyclerView.setLayoutManager(reviewLayoutManager);
+        reviewRecyclerView.setAdapter(reviewAdapter);
 
     }
 
@@ -80,10 +96,7 @@ public class DetailActivity extends AppCompatActivity implements DetailContract.
             presenter.fetchMovie(movie);
 
         }
-        trailerAdapter = new TrailerAdapter(this);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        trailerRecyclerView.setLayoutManager(layoutManager);
-        trailerRecyclerView.setAdapter(trailerAdapter);
+
     }
 
     @Override
@@ -105,7 +118,7 @@ public class DetailActivity extends AppCompatActivity implements DetailContract.
 
     @Override
     public void showRate(double rate) {
-        ratingBar.setRating((float) rate);
+        ratingBar.setRating((float) rate/2);
     }
 
     @Override
@@ -128,6 +141,11 @@ public class DetailActivity extends AppCompatActivity implements DetailContract.
         trailerAdapter.loadData(trailers);
     }
 
+    @Override
+    public void showReviews(MovieReviews reviews) {
+        Log.d(TAG, "showReviews: get reviews"+ reviews.getReviews().size());
+        reviewAdapter.loadReviews(reviews);
+    }
 
     @Override
     public void changeFavButtonColor() {

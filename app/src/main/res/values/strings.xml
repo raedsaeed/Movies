@@ -8,4 +8,8 @@
     <string name="poster">Poster</string>
     <string name="title_text">Title :</string>
     <string name="title_activity_main2">Main2Activity</string>
+    <string name="profile_image">Profile Image</string>
+    <string name="trailers">Trailers</string>
+    <string name="reviews">Reviews</string>
+    <string name="no_reviews">No Reviews yet</string>
 </resources>

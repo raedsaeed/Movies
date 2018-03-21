@@ -2,6 +2,7 @@ package com.example.raed.movies.view_presenter;
 
 import com.android.volley.VolleyError;
 import com.example.raed.movies.model.MovieResults;
+import com.example.raed.movies.model.MovieReviews;
 import com.example.raed.movies.model.MovieTrailers;
 
 /**
@@ -17,5 +18,9 @@ public interface BaseRequest {
 
     interface CompletedMovieRequest extends BaseRequest {
         void onSuccessfulMovieRequest (MovieResults movieResults);
+    }
+
+    interface CompletedReviewRequest extends BaseRequest {
+        void onSuccessfulReviewRequest (MovieReviews reviews);
     }
 }

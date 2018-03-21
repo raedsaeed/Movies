@@ -52,6 +52,7 @@
             android:layout_height="wrap_content"
             android:scrollbars="none"
             android:layout_gravity="top"
+            android:fillViewport="true"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <LinearLayout
@@ -59,9 +60,9 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <include layout="@layout/detail_header"/>
-
+                <include layout="@layout/detail_header" />
                 <include layout="@layout/video_part"/>
+                <include layout="@layout/review_part"/>
 
             </LinearLayout>
         </android.support.v4.widget.NestedScrollView>
